@@ -21,6 +21,7 @@ class ModelAdminTests(TestCase):
     def test_delete_email(self):
         url = reverse(f'admin:{self.user._meta.app_label}_{self.user._meta.model_name}_change', args=[self.user.id])
         page = self.client.get(url)
+        # This fails because Django can't write the change log
         response = self.client.post(url,
             data={
                 'name': 'User',

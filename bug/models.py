@@ -18,4 +18,8 @@ class EmailAddress(models.Model):
     )
 
     def __str__(self):
+        """
+        Because `address` is set to `None` when an `EmailAddress` is being deleted,
+        this function returns `None` when the admin app tries to write a change log.
+        """
         return self.address
