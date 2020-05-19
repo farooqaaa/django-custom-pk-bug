@@ -16,10 +16,15 @@ class EmailAddress(models.Model):
         related_name='emails',
         related_query_name='email',
     )
+    
+    def delete(self, using=None, keep_parents=False):
+        """Preserve PK before deleting"""
+        self._pk = self.pk
+        super().delete(using, keep_parents)
 
     def __str__(self):
         """
         Because `address` is set to `None` when an `EmailAddress` is being deleted,
         this function returns `None` when the admin app tries to write a change log.
         """
-        return self.address
+        return getattr(self, '_pk', self.pk)
